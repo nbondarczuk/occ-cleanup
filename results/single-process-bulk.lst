@@ -1,0 +1,30 @@
+norbert@fedora ~/work/HRM-4108_sh_retention_fees $ time DEBUG=1 ./sh_retention_fees.sh -t -l ./log
+2020-10-28-12:37:46 89306 INFO: Started SH_RETENTION_FEES - args: -t -l ./log
+2020-10-28-12:37:46 89306 INFO: Using the following options
+2020-10-28-12:37:46 89306 INFO: CONNECT_STRING: CGSYSADM/**********@T17BSCS
+2020-10-28-12:37:46 89306 INFO:       MAXYEARS: 6
+2020-10-28-12:37:46 89306 INFO:       MAXRECNO: 1000000000
+2020-10-28-12:37:46 89306 INFO:   TRANPACKSIZE: 500
+2020-10-28-12:37:46 89306 INFO:         OPMODE: ROLLBACK
+2020-10-28-12:37:46 89306 INFO:    TMP_LOG_DIR: /tmp
+2020-10-28-12:37:46 89306 INFO:  FINAL_LOG_DIR: ./log
+2020-10-28-12:37:46 89306 INFO:      MAXPROCNO: 0
+2020-10-28-12:37:46 89306 INFO:         PROCID: 0
+2020-10-28-12:37:46 89306 INFO: Cleaning table(s): FEES, FEES_OHXACT
+2020-10-28-12:37:46 89306 DEBUG/228: SQL: declare
+	recs_del_fees_ohxact NUMBER := 0;
+	recs_del_fees NUMBER := 0;
+begin
+	CGSYSADM.BCH_MAINTENANCE.CLEAN(recs_del_fees_ohxact, recs_del_fees, 6, 'ROLLBACK', 500, 1000000000);
+	dbms_output.put_line(recs_del_fees_ohxact || ', ' || recs_del_fees);
+end;
+
+2020-10-28-13:49:29 89306 DEBUG/256: Result: 15167399, 16795213
+2020-10-28-13:49:29 89306 DEBUG/257: Done: ROLLBACK
+2020-10-28-13:49:29 89306 INFO: Deleted FEES, FEES_OHXACT records: 15167399,16795213
+2020-10-28-13:49:29 89306 INFO: Finished SH_RETENTION_FEES - status: 0
+
+real	71m42.753s
+user	0m0.043s
+sys	0m0.131s
+
